@@ -66,9 +66,9 @@ void Map::load(const char *level)
 	collisionImage=oslLoadImageFile((char *)"data/collision.png",OSL_IN_RAM,OSL_PF_8888);
 #else
 	printf("Loading..\n");
-	backgroundImage=IMG_Load("app/native/assets/data/background.png");
-	levelImage=IMG_Load("app/native/assets/data/random_0.png");
-	collisionImage=IMG_Load("app/native/assets/data/collision.png");
+	backgroundImage=IMG_Load("data/background.png");
+	levelImage=IMG_Load("data/random_0.png");
+	collisionImage=IMG_Load("data/collision.png");
 #endif
 	int i,j;
 	for(j=0;j<tilesDown;j++) {

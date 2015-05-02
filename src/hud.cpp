@@ -7,11 +7,11 @@ extern SDL_Surface *screen;
 
 Hud::Hud()
 {
-	numbers=IMG_Load("app/native/assets/data/numbers.png");
-	winner=IMG_Load("app/native/assets/data/winner.png");
-	loser=IMG_Load("app/native/assets/data/loser.png");
-	icon[0]=IMG_Load("app/native/assets/data/blue_ninjaicon.png");
-	icon[1]=IMG_Load("app/native/assets/data/teethicon.png");
+	numbers=IMG_Load("data/numbers.png");
+	winner=IMG_Load("data/winner.png");
+	loser=IMG_Load("data/loser.png");
+	icon[0]=IMG_Load("data/blue_ninjaicon.png");
+	icon[1]=IMG_Load("data/teethicon.png");
 	leftScore=0;
 	rightScore=0;
 	who=0;

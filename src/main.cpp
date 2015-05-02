@@ -24,9 +24,9 @@ Mix_Chunk *sfx[8];
 Mix_Music *song;
 #endif
 const char *sfxpath[]={
-	"app/native/assets/data/start.wav",
-	"app/native/assets/data/jump.wav",
-	"app/native/assets/data/match.wav",
+	"data/start.wav",
+	"data/jump.wav",
+	"data/match.wav",
 };
 enum GameMode { MODE_TITLE, MODE_MENU, MODE_GAME, MODE_WINNER } gameMode;
 int resetTimer;
@@ -119,7 +119,7 @@ void draw(Map &map,Sprite &hero,Sprite &baddie,Sprite &target,Hud &hud)
 	target.draw(map.viewx,map.viewy);
 	hud.draw();
 	if( gameMode==MODE_TITLE) {
-		if(!titleImage) titleImage=IMG_Load("app/native/assets/data/title.png");
+		if(!titleImage) titleImage=IMG_Load("data/title.png");
 		if(titleImage) SDL_BlitSurface( titleImage, NULL, screen, NULL);
 	} else {
 		if(titleImage) SDL_FreeSurface( titleImage);
@@ -173,7 +173,7 @@ int main(int argc, char **argv)
     if(Mix_OpenAudio(44100,AUDIO_S16SYS,2,2048)<0) {
     	printf("Warning: couldn't set audio to 44100 Hz\n");
     }
-    song=Mix_LoadMUS("app/native/assets/data/Seaside.mp3");
+    song=Mix_LoadMUS("data/Seaside.mp3");
     for(int i=0; i<MAXSFX; i++) {
     	sfx[i]=Mix_LoadWAV(sfxpath[i]);
     }
@@ -182,10 +182,10 @@ int main(int argc, char **argv)
 	//loads our images into memory
 	Hud hud;
 	Map map;
-	map.load("app/native/assets/data/level.txt");
-	Sprite hero("app/native/assets/data/blue_ninja.png",64,64);
-	Sprite baddie("app/native/assets/data/teethsheet.png",64,64);
-	Sprite target("app/native/assets/data/girl.png",64,64);
+	map.load("data/level.txt");
+	Sprite hero("data/blue_ninja.png",64,64);
+	Sprite baddie("data/teethsheet.png",64,64);
+	Sprite target("data/girl.png",64,64);
 	Mix_PlayMusic(song,-1);
 	newGame(map,hero,baddie,target);
 	printf("New game\n");
