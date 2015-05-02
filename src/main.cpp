@@ -162,7 +162,7 @@ int main(int argc, char **argv)
 	//screen=SDL_SetVideoMode(480,272,16,SDL_HWSURFACE|SDL_DOUBLEBUF);
 	screen=SDL_SetVideoMode(640,384 /*480*/,32,SDL_HWSURFACE|SDL_DOUBLEBUF);
 	if(!screen) exit(2);
-	SDL_WM_SetCaption( "Leaping Ninjas", NULL );
+	SDL_WM_SetCaption( "Ninja Shopping Madness", NULL );
 	
 	SDL_Joystick *joy=0;
     if(SDL_NumJoysticks()>0)
@@ -183,8 +183,8 @@ int main(int argc, char **argv)
 	Hud hud;
 	Map map;
 	map.load("data/level.txt");
-	Sprite hero("data/blue_ninja.png",64,64);
-	Sprite baddie("data/teethsheet.png",64,64);
+	Sprite hero("data/Brown.png",64,64);
+	Sprite baddie("data/Rainbow.png",64,64);
 	Sprite target("data/girl.png",64,64);
 	Mix_PlayMusic(song,-1);
 	newGame(map,hero,baddie,target);
