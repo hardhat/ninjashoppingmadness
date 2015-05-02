@@ -184,7 +184,7 @@ int main(int argc, char **argv)
 	Map map;
 	map.load("data/level.txt");
 	Sprite hero("data/Brown.png",64,64);
-	Sprite baddie("data/Rainbow.png",64,64);
+	Sprite baddie("data/White.png",64,64);
 	Sprite target("data/girl.png",64,64);
 	Mix_PlayMusic(song,-1);
 	newGame(map,hero,baddie,target);
