@@ -1,7 +1,7 @@
 [Project]
 FileName=ninjashoppingmaddness.dev
 Name=ninjashoppingmaddness
-UnitCount=10
+UnitCount=12
 PchHead=-1
 PchSource=-1
 Ver=3
@@ -128,6 +128,7 @@ ProductName=
 ProductVersion=
 AutoIncBuildNrOnRebuild=0
 AutoIncBuildNrOnCompile=0
+UnitCount=12
 
 [Profile1]
 ProfileName=MingW
@@ -141,7 +142,7 @@ Compiler=-I"<INCLUDE>\SDL" -Dmain=SDL_main_@@_
 CppCompiler=-I"<INCLUDE>\SDL" -I"<INCLUDE>" -Dmain=SDL_main_@@_
 Linker=-lmingw32 -lSDLmain -lSDL -liberty -lSDL_mixer -lSDL_image_@@_
 PreprocDefines=
-CompilerSettings=0000000000000000000000
+CompilerSettings=0000000000000001000000
 Icon=
 ExeOutput=MingW
 ImagesOutput=
@@ -156,4 +157,24 @@ IncludeVersionInfo=0
 SupportXPThemes=0
 CompilerSet=0
 CompilerType=0
+
+[Unit11]
+FileName=src\game.h
+CompileCpp=1
+Folder=ninjashoppingmaddness
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit12]
+FileName=src\game.cpp
+CompileCpp=1
+Folder=ninjashoppingmaddness
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
 

@@ -191,7 +191,7 @@ void Map::draw()
 		int drangey=backgroundImage->h-screen->h;
 		src.x=viewx*drangex/srangex;
 		src.y=viewy*drangey/srangey;
-		SDL_BlitSurface(backgroundImage,&src,screen,0);
+//		SDL_BlitSurface(backgroundImage,&src,screen,0);
 	}
 #endif
 	int i,j;

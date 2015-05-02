@@ -109,8 +109,9 @@ void draw(Map &map,Sprite &hero,Sprite &baddie,Sprite &target,Hud &hud)
 #else
 	static SDL_Surface *bgImage=0;
 	//if(!bgImage) bgImage=IMG_Load("data/title.png");
-	if(bgImage) SDL_BlitSurface(bgImage,0,screen,0);
-	else SDL_FillRect(screen,0,SDL_MapRGB(screen->format,0,128,128));
+	//if(bgImage) SDL_BlitSurface(bgImage,0,screen,0);
+	//else 
+    SDL_FillRect(screen,0,SDL_MapRGB(screen->format,240,240,128));
 #endif
 	
 	map.draw();		//Draw the images to the screen
@@ -160,7 +161,8 @@ int main(int argc, char **argv)
 	if(SDL_Init(SDL_INIT_VIDEO|SDL_INIT_JOYSTICK|SDL_INIT_AUDIO) < 0) exit(1);
 	atexit(SDL_Quit);
 	//screen=SDL_SetVideoMode(480,272,16,SDL_HWSURFACE|SDL_DOUBLEBUF);
-	screen=SDL_SetVideoMode(640,384 /*480*/,32,SDL_HWSURFACE|SDL_DOUBLEBUF);
+	//screen=SDL_SetVideoMode(640,384 /*480*/,32,SDL_HWSURFACE|SDL_DOUBLEBUF|SDL_FULLSCREEN);
+	screen=SDL_SetVideoMode(1920,1080 /*480*/,32,SDL_HWSURFACE|SDL_DOUBLEBUF /* |SDL_FULLSCREEN */ );
 	if(!screen) exit(2);
 	SDL_WM_SetCaption( "Ninja Shopping Madness", NULL );
 	
