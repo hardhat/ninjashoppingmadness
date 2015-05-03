@@ -14,14 +14,14 @@ extern SDL_Surface *screen;
 Hud::Hud()
 {
 	numbers=IMG_Load("data/numbers.png");
-	victory[0]=IMG_Load("data/Rainbowwins.png");
-	victory[1]=IMG_Load("data/Whitewins.png");
-    victory[2]=IMG_Load("data/Blackwins.png");
-    victory[3]=IMG_Load("data/Brownwins.png");
-	icon[0]=IMG_Load("data/Rainbowicon.png");
-	icon[1]=IMG_Load("data/Whiteicon.png");
-	icon[2]=IMG_Load("data/Blackicon.png");
-	icon[3]=IMG_Load("data/Brownicon.png");
+	victory[0]=IMG_Load("data/RainbowWins.png");
+	victory[1]=IMG_Load("data/WhiteWins.png");
+    victory[2]=IMG_Load("data/BlackWins.png");
+    victory[3]=IMG_Load("data/BrownWins.png");
+	icon[0]=IMG_Load("data/RainbowIcon.png");
+	icon[1]=IMG_Load("data/WhiteIcon.png");
+	icon[2]=IMG_Load("data/BlackIcon.png");
+	icon[3]=IMG_Load("data/BrownIcon.png");
 	who=0;
 	whoX=0;
 	whoY=0;
@@ -39,12 +39,15 @@ void Hud::update(SpriteList &spriteList)
 {
     int i;
     SpriteList::iterator p;
-    
+
+    i=0;    
     for(p=spriteList.begin();p!=spriteList.end();p++) {
         Sprite *hero=*p;
     	score[i]=hero->score;
+    	i++;
     }
-	
+
+/*	
 	for(i=0;i<4;i++) {
         int xx=(screen->w-64)*i/4;
         if(heroX[i]<xx) {
@@ -57,7 +60,7 @@ void Hud::update(SpriteList &spriteList)
     	heroY[i]-=5;
     	if(heroY[i]<0) heroY[i]=0;
     }
-	
+*/	
 	i=0;
     for(p=spriteList.begin();p!=spriteList.end();p++,i++) {
         Sprite *hero=*p;
@@ -106,7 +109,7 @@ void Hud::draw()
     int i;
     for(i=0;i<4;i++) {
     	if(score[i]>=9) {
-    		drawIcon(screen->w/2-victory[i]->w/2,100,victory[i]);
+            if(victory[i]) drawIcon(screen->w/2-victory[i]->w/2,100,victory[i]);
     	}
     }
     for(i=0;i<4;i++) {
