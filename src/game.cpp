@@ -10,6 +10,7 @@
 #include "map.h"
 #include "hud.h"
 #include "sprite.h"
+#include "image.h"
 extern int resetTimer;
 extern SDL_Surface *screen;
 
@@ -57,10 +58,10 @@ void Game::mapReset(Map &map)
         Sprite *player=*p;
         player->reset(32*x, 32*j);
     }
-    for( SpriteList::iterator p=_itemList.begin(); p!=_itemList.end(); p++) {
+    for( ImageList::iterator p=_itemList.begin(); p!=_itemList.end(); p++) {
         x=(rand()%(map.getTilesAcross()-3))+2;
         j=(rand()%(map.getTilesDown()-2))+1;
-        Sprite *item=*p;
+        Image *item=*p;
         item->reset(32*x, 32*j);
     }
 //	map.calculateGradient(&target);
@@ -76,10 +77,10 @@ void Game::newGame(Map &map)
         Sprite *player=*p;
         player->score = 0;
     }
-    for( SpriteList::iterator p=_itemList.begin(); p!=_itemList.end(); p++) {
-        Sprite *item=*p;
-        item->score = 0;
-    }
+//    for( SpriteList::iterator p=_itemList.begin(); p!=_itemList.end(); p++) {
+//        Sprite *item=*p;
+//        item->score = 0;
+//    }
 	mapReset(map);
 	playSound(S_START);
 }
@@ -91,10 +92,10 @@ void Game::update(Map &map,Hud &hud)
         Sprite *player=*p;
         player->updatePhysics(&map);
     }
-    for( SpriteList::iterator p=_itemList.begin(); p!=_itemList.end(); p++) {
-        Sprite *item=*p;
-        item->updatePhysics(&map);
-    }
+//    for( ImageList::iterator p=_itemList.begin(); p!=_itemList.end(); p++) {
+//        Image *item=*p;
+//        item->updatePhysics(&map);
+//    }
 	//baddie.x=200;
 //	if(resetTimer>0) {
 //		resetTimer-=16;
@@ -132,8 +133,8 @@ void Game::draw(Map &map,Hud &hud)
         Sprite *player=*p;
         player->draw(map.viewx,map.viewy);
     }
-    for( SpriteList::iterator p=_itemList.begin(); p!=_itemList.end(); p++) {
-        Sprite *item=*p;
+    for( ImageList::iterator p=_itemList.begin(); p!=_itemList.end(); p++) {
+        Image *item=*p;
         item->draw(map.viewx,map.viewy);
     }
 	hud.draw();
@@ -182,7 +183,8 @@ void Game::addCharSprite(Sprite* spriteToAdd){
     printf("Success\n");
 }
 
-void Game::addItemSprite(Sprite *spriteToAdd){
-    _itemList.push_back(spriteToAdd);
+void Game::addItemImage(Image *imageToAdd){
+    _itemList.push_back(imageToAdd);
+    printf("Success\n");
 }
 

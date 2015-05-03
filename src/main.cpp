@@ -18,6 +18,7 @@
 #include "map.h"
 #include "sprite.h"
 #include "game.h"
+#include "image.h"
 
 #ifdef _PSP
 //Necessary to create eboot
@@ -63,7 +64,8 @@ int main(int argc, char **argv)
 	screen=SDL_SetVideoMode(1920,1080 /*480*/,32,SDL_HWSURFACE|SDL_DOUBLEBUF /* |SDL_FULLSCREEN */ );
 	if(!screen) exit(2);
 	SDL_WM_SetCaption( "Ninja Shopping Madness", NULL );
-	
+    srand(time(NULL));
+    
 	SDL_Joystick *joy=0;
     if(SDL_NumJoysticks()>0)
         joy=SDL_JoystickOpen(0);
@@ -89,6 +91,7 @@ int main(int argc, char **argv)
     Sprite brown("data/Brown.png",64,64);
     Sprite goat("data/Goat.png",64,128);
 	Sprite target("data/girl.png",64,64);
+    Image test("art/Bros.png");
 	Mix_PlayMusic(song,-1);
     printf("Adding Rainbow Bunny: ");
     game.addCharSprite(&rainbow);
@@ -99,6 +102,7 @@ int main(int argc, char **argv)
     printf("Adding Brown Bunny: ");
     game.addCharSprite(&brown);
     printf("Adding Goat on a Pole: ");
+    game.addItemImage(&test);
     game.addCharSprite(&goat);
 	game.newGame(map);
 	printf("New game\n");
@@ -238,6 +242,7 @@ int main(int argc, char **argv)
 
 //		printf("Entry + 1 Beer\n");
 		game.draw(map,hud);
+        test.draw(250, 250);
 	}
 	
 	printf("Exiting...\n");

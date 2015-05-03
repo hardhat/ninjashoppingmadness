@@ -3,7 +3,9 @@
 class Map;
 class Sprite;
 class Hud;
+class Image;
 typedef std::deque<Sprite *> SpriteList;
+typedef std::deque<Image *> ImageList;
 
 class Game
 {
@@ -19,11 +21,12 @@ public:
     void handleDown(int key);
     void handleUp(int key);
     void addCharSprite(Sprite *spriteToAdd);
-    void addItemSprite(Sprite *spriteToAdd);
+    void addItemImage(Image *imageToAdd);
     SpriteList _playerList;
+    ImageList _itemList;
 private:
     Map *_map;
 //    SpriteList _playerList;
-    SpriteList _itemList;
+//    ImageList _itemList;
 };
 
