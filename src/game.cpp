@@ -124,7 +124,7 @@ void Game::draw(Map &map,Hud &hud)
 	//if(!bgImage) bgImage=IMG_Load("data/title.png");
 	//if(bgImage) SDL_BlitSurface(bgImage,0,screen,0);
 	//else 
-    SDL_FillRect(screen,0,SDL_MapRGB(screen->format,240,240,128));
+    SDL_FillRect(screen,0,SDL_MapRGB(screen->format,189, 237, 255));
 #endif
 	
 	map.draw();		//Draw the images to the screen
