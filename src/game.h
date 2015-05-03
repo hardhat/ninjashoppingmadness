@@ -9,6 +9,7 @@ class Game
 {
 public:
     Game();
+    bool hitTarget(Sprite *hero,Map &map,Hud &hud);
     bool hitTarget(Sprite *hero,Sprite *target,Map &map,Hud &hud);
     void mapReset(Map &map);
     void newGame(Map &map);

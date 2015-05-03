@@ -33,6 +33,16 @@ bool Game::hitTarget(Sprite *hero,Sprite *target,Map &map,Hud &hud)
 	return false;
 }
 
+bool Game::hitTarget(Sprite *hero,Map &map,Hud &hud)
+{
+    for(SpriteList::iterator p=_itemList.begin();p!=_itemList.end();p++) {
+        Sprite *target=*p;
+        bool result=hitTarget(hero,target,map,hud);
+        if(result) return result;
+    }
+    return false;
+}
+
 void Game::mapReset(Map &map)
 {
 //	hero.reset(64,128);
