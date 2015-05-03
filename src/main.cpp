@@ -87,12 +87,19 @@ int main(int argc, char **argv)
 	Sprite white("data/White.png",64,64);
     Sprite black("data/Black.png",64,64);
     Sprite brown("data/Brown.png",64,64);
+    Sprite goat("data/Goat.png",64,128);
 	Sprite target("data/girl.png",64,64);
 	Mix_PlayMusic(song,-1);
+    printf("Adding Rainbow Bunny: ");
     game.addCharSprite(&rainbow);
+    printf("Adding White Bunny: ");
     game.addCharSprite(&white);
+    printf("Adding Black Bunny: ");
     game.addCharSprite(&black);
+    printf("Adding Brown Bunny: ");
     game.addCharSprite(&brown);
+    printf("Adding Goat on a Pole: ");
+    game.addCharSprite(&goat);
 	game.newGame(map);
 	printf("New game\n");
 	//main while loop
@@ -109,7 +116,7 @@ int main(int argc, char **argv)
 	bool done=false;
 	while( !done) {
 		SDL_Event event;
-		printf("Event\n");
+//		printf("Event\n");
 		while(SDL_PollEvent(&event)) {
 			switch(event.type) {
 			case SDL_MOUSEBUTTONDOWN:
@@ -145,9 +152,12 @@ int main(int argc, char **argv)
 				break;
 			case SDL_JOYBUTTONDOWN:
 				switch(event.jbutton.button) {
-				case 3: rainbow.moveLeft(resetTimer==0); break;
-				case 1: rainbow.moveRight(resetTimer==0); break;
-				case 2: rainbow.jump(resetTimer==0); break;
+				case 3: white.moveLeft(resetTimer==0); break;
+				case 1: white.moveRight(resetTimer==0); break;
+				case 2: white.jump(resetTimer==0); break;
+                case 15: brown.moveLeft(resetTimer==0); printf("15"); break;
+                case 13: brown.moveRight(resetTimer==0); printf("13"); break;
+                case 14: brown.jump(resetTimer==0); printf("14"); break;
 				}
 				 break;
 			case SDL_JOYBUTTONUP:
@@ -155,9 +165,12 @@ int main(int argc, char **argv)
 				else if(gameMode==MODE_MENU) gameMode=MODE_GAME;
 				else if(gameMode==MODE_WINNER && resetTimer==0) gameMode=MODE_MENU;
 				switch(event.jbutton.button) {
-				case 3: rainbow.moveLeft(false); break;
-				case 1: rainbow.moveRight(false); break;
-				case 2: rainbow.jump(false); break;
+				case 3: white.moveLeft(false); break;
+				case 1: white.moveRight(false); break;
+				case 2: white.jump(false); break;
+                case 15: brown.moveLeft(false); printf("15"); break;
+                case 13: brown.moveRight(false); printf("13"); break;
+                case 14: brown.jump(false); printf("14"); break;
 				}
 				break;
 
@@ -223,7 +236,7 @@ int main(int argc, char **argv)
 //    		black.ai(&map,&target);
 //        }
 
-		printf("Entry + 1 Beer\n");
+//		printf("Entry + 1 Beer\n");
 		game.draw(map,hud);
 	}
 	
