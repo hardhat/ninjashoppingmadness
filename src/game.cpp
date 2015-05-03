@@ -32,7 +32,7 @@ bool Game::hitTarget(Sprite *hero,Image *target,Map &map,Hud &hud)
         int x,j;
         x=(rand()%(map.getTilesAcross()-3))+2;
         j=(rand()%(map.getTilesDown()-2))+1;
-        target->reset(32*x, 32*j);
+        target->reset(64*x, 64*j);
         this->update(map, hud);
 		return true;
 	}
@@ -62,13 +62,13 @@ void Game::mapReset(Map &map)
         x=(rand()%(map.getTilesAcross()-3))+2;
         j=(rand()%(map.getTilesDown()-2))+1;
         Sprite *player=*p;
-        player->reset(32*x, 32*j);
+        player->reset(64*x, 64*j);
     }
     for( ImageList::iterator p=_itemList.begin(); p!=_itemList.end(); p++) {
         x=(rand()%(map.getTilesAcross()-3))+2;
         j=(rand()%(map.getTilesDown()-2))+1;
         Image *item=*p;
-        item->reset(32*x, 32*j);
+        item->reset(64*x, 64*j);
     }
 //	map.calculateGradient(&target);
 //	resetTimer=3000;
@@ -94,16 +94,19 @@ void Game::newGame(Map &map)
 void Game::update(Map &map,Hud &hud)
 {
 	map.updatePhysics();
-    for( SpriteList::iterator p=_playerList.begin(); p!=_playerList.end(); p++) {
-        Sprite *player=*p;
-        player->updatePhysics(&map);
-        this->hitTarget(player, map, hud);
-    }
-    hud.update(_playerList);
     for( ImageList::iterator p=_itemList.begin(); p!=_itemList.end(); p++) {
         Image *item=*p;
         item->updatePhysics(&map);
     }
+    for( SpriteList::iterator p=_playerList.begin(); p!=_playerList.end(); p++) {
+        Sprite *player=*p;
+        player->updatePhysics(&map);
+        if(this->hitTarget(player, map, hud)) {
+            playSound(S_MATCH);
+            if(player->score>8) gameMode=MODE_WINNER;
+        }
+    }
+    hud.update(_playerList);
 	//baddie.x=200;
 //	if(resetTimer>0) {
 //		resetTimer-=16;
