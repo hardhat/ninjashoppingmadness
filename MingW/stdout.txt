@@ -1,0 +1,37 @@
+Joysticks: 0
+Loading..
+Done..
+count: 438 steps...(queue size=0)
+******************************
+*JKLMNOPQRSTUVWXYZYXWVUTSTUVW*
+*IJKLMNOPQRSTUVWXYXWVUTSRSTUV*
+*H**********************Q*****
+*GFEDCBA@ABCDEFGHIJKLMNOPQRST*
+******************K***********
+*]\[ZYXWVUTSRQPONMLMNOPQRSTUV*
+*^]\[ZYXWVUTSRQPONMNOPQRSTUVW*
+***]***********Q**************
+*`_^]\[ZYXWVUTSRSTUVWXYZ[\]^_*
+***_***********S**************
+*ba`_^]\[ZYXWVUTUVWXYZ[\]^_`a*
+*********[********************
+*dcba`_^]\]^_`abcdefghijklmno*
+******************************
+New game
+Event
+Entry + 1 Beer
+Event
+Entry + 1 Beer
+Event
+Entry + 1 Beer
+Event
+Entry + 1 Beer
+Event
+Entry + 1 Beer
+Event
+Entry + 1 Beer
+Event
+Entry + 1 Beer
+Event
+Entry + 1 Beer
+Exiting...
