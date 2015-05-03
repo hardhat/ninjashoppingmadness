@@ -25,9 +25,9 @@ Hud::Hud()
 	who=0;
 	whoX=0;
 	whoY=0;
-	for(int i=0;i<3;i++) {
+	for(int i=0;i<4;i++) {
     	score[i]=0;
-    	heroX[i]=(screen->w-64)*i/4;
+    	heroX[i]=(screen->w-128)*i/4+64;
     	heroY[i]=0;
     }
 	leftActive=false;
@@ -60,7 +60,10 @@ void Hud::update(SpriteList &spriteList)
     	heroY[i]-=5;
     	if(heroY[i]<0) heroY[i]=0;
     }
-*/	
+    for(SpriteList::iterator p=p.begin();p.end();p++) {
+        Sprite *hero=*p;
+    	score[i]=hero->score;
+    }
 	i=0;
     for(p=spriteList.begin();p!=spriteList.end();p++,i++) {
         Sprite *hero=*p;
@@ -71,6 +74,7 @@ void Hud::update(SpriteList &spriteList)
     		who=0;	
     	}
     }
+    */
 }
 
 void Hud::animateScore(int viewx,int viewy,Falling *who)
@@ -113,7 +117,7 @@ void Hud::draw()
     	}
     }
     for(i=0;i<4;i++) {
-    	drawDigit(icon[0],(int)heroX[i],(int)heroY[i],score[i]);
+    	drawDigit(icon[i],(int)heroX[i],(int)heroY[i],score[i]);
     }
 	if(leftActive) drawArrow(10,screen->h/2,3);
 	drawArrow(10,screen->h/2,0);
