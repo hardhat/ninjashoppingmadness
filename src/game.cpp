@@ -1,5 +1,9 @@
 #include <SDL/SDL.h>
+#ifdef __APPLE__
+#include <SDL_mixer/SDL_mixer.h>
+#else
 #include <SDL/SDL_mixer.h>
+#endif
 
 #include "main.h"
 #include "game.h"

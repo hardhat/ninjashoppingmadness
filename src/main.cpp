@@ -5,7 +5,7 @@
 #include <oslib/oslib.h>
 #else
 #include <SDL/SDL.h>
-#ifdef _OSX
+#ifdef __APPLE__
 #include <SDL_image/SDL_image.h>
 #include <SDL_mixer/SDL_mixer.h>
 #else

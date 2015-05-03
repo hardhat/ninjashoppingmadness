@@ -2,6 +2,7 @@
 #include "sprite.h"
 #include "map.h"
 #include "main.h"
+#include <SDL_image/SDL_image.h>
 
 #ifndef _PSP
 extern SDL_Surface *screen;
@@ -103,7 +104,7 @@ void Sprite::updatePhysics(Map *map)
 	if(frameTimer<0) {
 		frameTimer=3;
         if(facing==FACING_LEFT){
-            if(state==CS_RUNNING)	frame=20+((frame+1)%14);
+            if(state==CS_RUNNING)	frame=20+(((frame+1)-20)%6);
             if(state==CS_STANDING) frame=30;
             if(state==CS_JUMPING) frame=26;
             if(state==CS_FALLING) frame=40;	// was 8

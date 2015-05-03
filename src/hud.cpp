@@ -1,5 +1,5 @@
 #include <SDL/SDL.h>
-#ifdef _OSX
+#ifdef __APPLE__
 #include <SDL_image/SDL_image.h>
 #else
 #include <SDL/SDL_image.h>
