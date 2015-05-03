@@ -84,7 +84,7 @@ void Game::newGame(Map &map)
 	playSound(S_START);
 }
 
-void Game::update(Map &map,Sprite &hero,Sprite &baddie,Sprite &target,Hud &hud)
+void Game::update(Map &map,Hud &hud)
 {
 	map.updatePhysics();
     for( SpriteList::iterator p=_playerList.begin(); p!=_playerList.end(); p++) {
@@ -96,26 +96,26 @@ void Game::update(Map &map,Sprite &hero,Sprite &baddie,Sprite &target,Hud &hud)
         item->updatePhysics(&map);
     }
 	//baddie.x=200;
-	if(resetTimer>0) {
-		resetTimer-=16;
-		if(resetTimer<=0) {
-			resetTimer=0;
-			Mix_ResumeMusic();
-		}
-	} else {
-		map.updateView(&hero); //, &baddie);
-	}
-	hud.update(&hero, &baddie);
-	if( hitTarget(&hero,&target,map,hud) || hitTarget(&baddie,&target,map,hud)) {
-		mapReset(map);
-		playSound(S_MATCH);
-		if(hud.leftScore>8 || hud.rightScore>8) gameMode=MODE_WINNER;
-	}
+//	if(resetTimer>0) {
+//		resetTimer-=16;
+//		if(resetTimer<=0) {
+//			resetTimer=0;
+//			Mix_ResumeMusic();
+//		}
+//	} else {
+//		map.updateView(&hero); //, &baddie);
+//	}
+//	hud.update(&hero, &baddie);
+//	if( hitTarget(&hero,&target,map,hud) || hitTarget(&baddie,&target,map,hud)) {
+//		mapReset(map);
+//		playSound(S_MATCH);
+//		if(hud.leftScore>8 || hud.rightScore>8) gameMode=MODE_WINNER;
+//	}
 }
 
 SDL_Surface *titleImage=0;
 SDL_Surface *menuImage=0;
-void Game::draw(Map &map,Sprite &hero,Sprite &baddie,Sprite &target,Hud &hud)
+void Game::draw(Map &map,Hud &hud)
 {
 #ifdef _PSP
 	oslStartDrawing();		//To be able to draw on the screen

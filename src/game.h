@@ -13,8 +13,8 @@ public:
     void mapReset(Map &map);
     void newGame(Map &map);
 
-    void draw(Map &map,Sprite &hero,Sprite &baddie,Sprite &target,Hud &hud);
-    void update(Map &map,Sprite &hero,Sprite &baddie,Sprite &target,Hud &hud);
+    void draw(Map &map,Hud &hud);
+    void update(Map &map,Hud &hud);
     void handleDown(int key);
     void handleUp(int key);
     void addCharSprite(Sprite *spriteToAdd);

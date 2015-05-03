@@ -200,18 +200,18 @@ int main(int argc, char **argv)
 			}
 		}
 #endif
-    	game.update(map,rainbow,black,target,hud);
+    	game.update(map,hud);
         if(gameMode==MODE_GAME && resetTimer==0) {
     		black.ai(&map,&target);
         }
     
-    	game.update(map,rainbow,black,target,hud);
+    	game.update(map,hud);
     	if(gameMode==MODE_GAME && resetTimer==0) {
     		black.ai(&map,&target);
         }
 
 		printf("Entry + 1 Beer\n");
-		game.draw(map,rainbow,black,target,hud);
+		game.draw(map,hud);
 	}
 	
 	printf("Exiting...\n");
