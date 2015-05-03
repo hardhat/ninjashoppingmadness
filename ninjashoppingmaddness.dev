@@ -178,8 +178,8 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit13]
-FileName=src\image.cpp
+[Unit14]
+FileName=src\image.h
 CompileCpp=1
 Folder=ninjashoppingmaddness
 Compile=1
@@ -188,8 +188,8 @@ Priority=1000
 OverrideBuildCmd=0
 BuildCmd=
 
-[Unit14]
-FileName=src\image.h
+[Unit13]
+FileName=src\image.cpp
 CompileCpp=1
 Folder=ninjashoppingmaddness
 Compile=1
