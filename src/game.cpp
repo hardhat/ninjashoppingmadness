@@ -19,7 +19,7 @@ Game::Game()
     
 }
 
-bool Game::hitTarget(Sprite *hero,Sprite *target,Map &map,Hud &hud)
+bool Game::hitTarget(Sprite *hero,Image *target,Map &map,Hud &hud)
 {
 	float deltax,deltay;
 	float dist;
@@ -36,10 +36,11 @@ bool Game::hitTarget(Sprite *hero,Sprite *target,Map &map,Hud &hud)
 
 bool Game::hitTarget(Sprite *hero,Map &map,Hud &hud)
 {
-    for(SpriteList::iterator p=_itemList.begin();p!=_itemList.end();p++) {
-        Sprite *target=*p;
+//    printf("hitTarget called");
+    for(ImageList::iterator p=_itemList.begin();p!=_itemList.end();p++) {
+        Image *target=*p;
         bool result=hitTarget(hero,target,map,hud);
-        if(result) return result;
+        if(result) printf("collision detected\n"); return result;
     }
     return false;
 }
@@ -91,6 +92,7 @@ void Game::update(Map &map,Hud &hud)
     for( SpriteList::iterator p=_playerList.begin(); p!=_playerList.end(); p++) {
         Sprite *player=*p;
         player->updatePhysics(&map);
+        this->hitTarget(player, map, hud);
     }
 //    for( ImageList::iterator p=_itemList.begin(); p!=_itemList.end(); p++) {
 //        Image *item=*p;
