@@ -7,54 +7,67 @@
 
 #include "hud.h"
 #include "falling.h"
+#include "sprite.h"
 
 extern SDL_Surface *screen;
 
 Hud::Hud()
 {
 	numbers=IMG_Load("data/numbers.png");
-	winner=IMG_Load("data/winner.png");
-	loser=IMG_Load("data/loser.png");
-	icon[0]=IMG_Load("data/blue_ninjaicon.png");
-	icon[1]=IMG_Load("data/teethicon.png");
-	leftScore=0;
-	rightScore=0;
+	victory[0]=IMG_Load("data/Rainbowwins.png");
+	victory[1]=IMG_Load("data/Whitewins.png");
+    victory[2]=IMG_Load("data/Blackwins.png");
+    victory[3]=IMG_Load("data/Brownwins.png");
+	icon[0]=IMG_Load("data/Rainbowicon.png");
+	icon[1]=IMG_Load("data/Whiteicon.png");
+	icon[2]=IMG_Load("data/Blackicon.png");
+	icon[3]=IMG_Load("data/Brownicon.png");
 	who=0;
 	whoX=0;
 	whoY=0;
-	leftX=0;
-	leftY=0;
-	rightX=screen->w-64;
-	rightY=0;
+	for(int i=0;i<3;i++) {
+    	score[i]=0;
+    	heroX[i]=(screen->w-64)*i/4;
+    	heroY[i]=0;
+    }
 	leftActive=false;
 	rightActive=false;
 	jumpActive=false;
 }
 
-void Hud::update(Falling *hero, Falling *baddie)
+void Hud::update(SpriteList &spriteList)
 {
-	leftScore=hero->score;
-	rightScore=baddie->score;
+    int i;
+    SpriteList::iterator p;
+    
+    for(p=spriteList.begin();p!=spriteList.end();p++) {
+        Sprite *hero=*p;
+    	score[i]=hero->score;
+    }
 	
-	leftX-=5;
-	if(leftX<0) leftX=0;
-	leftY-=5;
-	if(leftY<0) leftY=0;
-	rightX+=5;
-	if(rightX>screen->w-64) rightX=screen->w-64;
-	rightY-=5;
-	if(rightY<0) rightY=0;
+	for(i=0;i<4;i++) {
+        int xx=(screen->w-64)*i/4;
+        if(heroX[i]<xx) {
+        	heroX[i]+=5;
+        	if(heroX[i]>xx) heroX[i]=xx;
+        } else {
+            heroX[i]-=5;
+            if(heroX[i]<xx) heroX[i]=xx;
+        }
+    	heroY[i]-=5;
+    	if(heroY[i]<0) heroY[i]=0;
+    }
 	
-	if(who==hero) {
-		leftX=whoX;
-		leftY=whoY;
-		who=0;	
-	}
-	if(who==baddie) {
-		rightX=whoX;
-		rightY=whoY;
-		who=0;
-	}
+	i=0;
+    for(p=spriteList.begin();p!=spriteList.end();p++,i++) {
+        Sprite *hero=*p;
+        
+        if(who==hero) {
+    		heroX[i]=whoX;
+    		heroY[i]=whoY;
+    		who=0;	
+    	}
+    }
 }
 
 void Hud::animateScore(int viewx,int viewy,Falling *who)
@@ -88,18 +101,17 @@ void Hud::drawDigit(SDL_Surface *icon,int x,int y,int i)
 	drawDigit(x+32,y,i);
 }
 
-
 void Hud::draw()
 {
-	if(leftScore>=9) {
-		drawIcon(screen->w/2-winner->w/2,100,winner);
-	}
-	if(rightScore>=9) {
-		drawIcon(screen->w/2-loser->w/2,100,loser);
-	}
-	drawDigit(icon[0],(int)leftX,(int)leftY,leftScore);
-	drawDigit(icon[1],(int)rightX,(int)rightY,rightScore);
-	
+    int i;
+    for(i=0;i<4;i++) {
+    	if(score[i]>=9) {
+    		drawIcon(screen->w/2-victory[i]->w/2,100,victory[i]);
+    	}
+    }
+    for(i=0;i<4;i++) {
+    	drawDigit(icon[0],(int)heroX[i],(int)heroY[i],score[i]);
+    }
 	if(leftActive) drawArrow(10,screen->h/2,3);
 	drawArrow(10,screen->h/2,0);
 	if(rightActive) drawArrow(screen->w-32-10,screen->h/2,3);

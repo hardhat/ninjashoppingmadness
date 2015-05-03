@@ -94,6 +94,7 @@ void Game::update(Map &map,Hud &hud)
         player->updatePhysics(&map);
         this->hitTarget(player, map, hud);
     }
+    hud.update(_playerList);
 //    for( ImageList::iterator p=_itemList.begin(); p!=_itemList.end(); p++) {
 //        Image *item=*p;
 //        item->updatePhysics(&map);

@@ -1,6 +1,8 @@
 #ifndef SPRITE_H
 #define SPRITE_H
 
+#include<deque>
+
 #ifdef _PSP
 #include <oslib/oslib.h>
 #else
@@ -64,5 +66,7 @@ public:
 	void reset(int x,int y);
 	void ai(Map *map, Sprite *target);
 };
+
+typedef std::deque<Sprite *> SpriteList;
 
 #endif
