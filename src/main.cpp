@@ -5,8 +5,13 @@
 #include <oslib/oslib.h>
 #else
 #include <SDL/SDL.h>
+#ifdef _OSX
 #include <SDL_image/SDL_image.h>
 #include <SDL_mixer/SDL_mixer.h>
+#else
+#include <SDL/SDL_image.h>
+#include <SDL/SDL_mixer.h>
+#endif
 #endif
 #include "main.h"
 #include "hud.h"

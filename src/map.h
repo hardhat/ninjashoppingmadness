@@ -5,7 +5,11 @@
 #include <oslib/oslib.h>
 #else
 #include <SDL/SDL.h>
+#ifdef _OSX
 #include <SDL_image/SDL_image.h>
+#else
+#include <SDL/SDL_image.h>
+#endif
 #endif
 
 #include <string>
