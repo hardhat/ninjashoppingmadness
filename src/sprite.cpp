@@ -2,7 +2,7 @@
 #include "sprite.h"
 #include "map.h"
 #include "main.h"
-#include <SDL/SDL_image.h>
+#include <SDL_image/SDL_image.h>
 
 #ifndef _PSP
 extern SDL_Surface *screen;
