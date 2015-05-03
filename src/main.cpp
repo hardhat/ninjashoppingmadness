@@ -169,6 +169,12 @@ int main(int argc, char **argv)
 				case 'a': black.moveLeft(resetTimer==0); break;
 				case 'd': black.moveRight(resetTimer==0); break;
 				case 'w': black.jump(resetTimer==0); break;
+                case 'j': white.moveLeft(resetTimer==0); break;
+                case 'l': white.moveRight(resetTimer==0); break;
+                case 'i': white.jump(resetTimer==0); break;
+                case SDLK_KP4: brown.moveLeft(resetTimer==0); break;
+                case SDLK_KP6: brown.moveRight(resetTimer==0); break;
+                case SDLK_KP8: brown.jump(resetTimer==0); break;
 				}
 				break;
 			case SDL_KEYUP:
@@ -179,6 +185,13 @@ int main(int argc, char **argv)
 				case 'a': black.moveLeft(false); break;
 				case 'd': black.moveRight(false); break;
 				case 'w': black.jump(false); break;
+                case 'j': white.moveLeft(false); break;
+                case 'l': white.moveRight(false); break;
+                case 'i': white.jump(false); break;
+                case SDLK_KP4: brown.moveLeft(false); break;
+                case SDLK_KP6: brown.moveRight(false); break;
+                case SDLK_KP8: brown.jump(false); break;
+
 				case SDLK_RETURN: game.newGame(map); break;
 				case SDLK_ESCAPE:
 					if(gameMode==MODE_MENU) {
@@ -201,14 +214,14 @@ int main(int argc, char **argv)
 		}
 #endif
     	game.update(map,hud);
-        if(gameMode==MODE_GAME && resetTimer==0) {
-    		black.ai(&map,&target);
-        }
+//        if(gameMode==MODE_GAME && resetTimer==0) {
+//    		black.ai(&map,&target);
+//        }
     
-    	game.update(map,hud);
-    	if(gameMode==MODE_GAME && resetTimer==0) {
-    		black.ai(&map,&target);
-        }
+//    	game.update(map,hud);
+//    	if(gameMode==MODE_GAME && resetTimer==0) {
+//    		black.ai(&map,&target);
+//        }
 
 		printf("Entry + 1 Beer\n");
 		game.draw(map,hud);
