@@ -26,3 +26,12 @@
 *.exe
 *.out
 *.app
+
+# log files
+Makefile.win
+stdout.txt
+stderr.txt
+
+C
+A
+
