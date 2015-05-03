@@ -92,7 +92,13 @@ int main(int argc, char **argv)
     Sprite brown("data/Brown.png",64,64);
     Sprite goat("data/Goat.png",64,128);
 	Sprite target("data/girl.png",64,64);
-    Image test("art/Bros.png");
+    Image bros("art/Bros.png");
+    Image cart("art/Cart.png");
+    Image lego("art/Lego.png");
+    Image orca("art/Orca.png");
+    Image pik("art/Pik.png");
+    Image smash("art/Smash.png");
+    Image tri("art/Tri.png");
 	Mix_PlayMusic(song,-1);
     printf("Adding Rainbow Bunny: ");
     game.addCharSprite(&rainbow);
@@ -103,8 +109,21 @@ int main(int argc, char **argv)
     printf("Adding Brown Bunny: ");
     game.addCharSprite(&brown);
     printf("Adding Goat on a Pole: ");
-    game.addItemImage(&test);
     game.addCharSprite(&goat);
+    printf("Adding Super Mario Bros: ");
+    game.addItemImage(&bros);
+    printf("Adding Mario Cart: ");
+    game.addItemImage(&cart);
+    printf("Adding Lego: ");
+    game.addItemImage(&lego);
+    printf("Adding Orca: ");
+    game.addItemImage(&orca);
+    printf("Adding Pik: ");
+    game.addItemImage(&pik);
+    printf("Adding Super Smash Bros: ");
+    game.addItemImage(&smash);
+    printf("Adding Tri: ");
+    game.addItemImage(&tri);
 	game.newGame(map);
 	printf("New game\n");
 	//main while loop
@@ -243,7 +262,7 @@ int main(int argc, char **argv)
 
 //		printf("Entry + 1 Beer\n");
 		game.draw(map,hud);
-        test.draw(250, 250);
+//        test.draw(250, 250);
 	}
 	
 	printf("Exiting...\n");

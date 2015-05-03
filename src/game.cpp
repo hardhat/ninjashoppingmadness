@@ -29,6 +29,11 @@ bool Game::hitTarget(Sprite *hero,Image *target,Map &map,Hud &hud)
 	if(dist<32*32) {
 		hero->score++;
 		hud.animateScore(map.viewx,map.viewy,hero);
+        int x,j;
+        x=(rand()%(map.getTilesAcross()-3))+2;
+        j=(rand()%(map.getTilesDown()-2))+1;
+        target->reset(32*x, 32*j);
+        this->update(map, hud);
 		return true;
 	}
 	return false;
@@ -37,10 +42,10 @@ bool Game::hitTarget(Sprite *hero,Image *target,Map &map,Hud &hud)
 bool Game::hitTarget(Sprite *hero,Map &map,Hud &hud)
 {
 //    printf("hitTarget called");
-    for(ImageList::iterator p=_itemList.begin();p!=_itemList.end();p++) {
+    for(ImageList::iterator p=_itemList.begin(); p!=_itemList.end(); p++) {
         Image *target=*p;
         bool result=hitTarget(hero,target,map,hud);
-        if(result) printf("collision detected\n"); return result;
+        if(result) return result;
     }
     return false;
 }
@@ -94,10 +99,10 @@ void Game::update(Map &map,Hud &hud)
         player->updatePhysics(&map);
         this->hitTarget(player, map, hud);
     }
-//    for( ImageList::iterator p=_itemList.begin(); p!=_itemList.end(); p++) {
-//        Image *item=*p;
-//        item->updatePhysics(&map);
-//    }
+    for( ImageList::iterator p=_itemList.begin(); p!=_itemList.end(); p++) {
+        Image *item=*p;
+        item->updatePhysics(&map);
+    }
 	//baddie.x=200;
 //	if(resetTimer>0) {
 //		resetTimer-=16;
