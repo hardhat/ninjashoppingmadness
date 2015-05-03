@@ -73,7 +73,7 @@ int main(int argc, char **argv)
     if(Mix_OpenAudio(44100,AUDIO_S16SYS,2,2048)<0) {
     	printf("Warning: couldn't set audio to 44100 Hz\n");
     }
-    song=Mix_LoadMUS("data/Seaside.mp3");
+    song=Mix_LoadMUS("data/mallmusic.mp3");
     for(int i=0; i<MAXSFX; i++) {
     	sfx[i]=Mix_LoadWAV(sfxpath[i]);
     }
