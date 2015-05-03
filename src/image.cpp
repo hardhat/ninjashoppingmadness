@@ -73,8 +73,25 @@ void Image::draw(int viewx,int viewy)
 #endif
 }
 
+void Image::updatePhysics(Map *map)
+{
+    updateGravity(map);
+    vx=vx+ax;
+    vx=vx*0.95f;	// air friction.
+    if(vx>0.001f && vx<0.001f) vx=0;  // avoid underflow.
+    float newx=x+vx;
+    int i;
+    for(i=0;i<8;i++) {
+        if( !map->collide((Falling *)this,newx,y)) break;
+        vx/=2.0f; // didn't make it, so try half the distance.
+        newx=x+vx;
+    }
+}
+
+
 void Image::reset(int x,int y)
 {
+    printf("resetting");
     this->x=x;
     this->y=y;
     vx=0;

@@ -61,6 +61,7 @@ public:
     ~Image();
     /// Show the sprite.
     void draw(int viewx,int viewy);
+    void updatePhysics(Map *map);
     void reset(int x,int y);
 };
 
