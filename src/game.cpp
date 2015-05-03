@@ -41,16 +41,6 @@ void Game::mapReset(Map &map)
 //	j=(rand()%(map.getTilesDown()-2))+1;
 //	target.reset(32*i,32*j);
     int x,j;
-//    for (int i = 0; i < _playerList.size(); i++) {
-//        i=(rand()%(map.getTilesAcross()-3))+2;
-//        j=(rand()%(map.getTilesDown()-2))+1;
-//        _playerList[i]->reset(32*x, 32*j);
-//    }
-//    for (int i = 0; i < _itemList.size(); i++) {
-//        x=(rand()%(map.getTilesAcross()-3))+2;
-//        j=(rand()%(map.getTilesDown()-2))+1;
-//        _itemList[i]->reset(32*x, 32*j);
-//    }
     for( SpriteList::iterator p=_playerList.begin(); p!=_playerList.end(); p++) {
         x=(rand()%(map.getTilesAcross()-3))+2;
         j=(rand()%(map.getTilesDown()-2))+1;
@@ -178,8 +168,8 @@ void Game::handleDown(int key)
 }
 
 void Game::addCharSprite(Sprite* spriteToAdd){
-    printf("Adding character sprite\n");
     _playerList.push_back(spriteToAdd);
+    printf("Success\n");
 }
 
 void Game::addItemSprite(Sprite *spriteToAdd){

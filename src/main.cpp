@@ -87,12 +87,19 @@ int main(int argc, char **argv)
 	Sprite white("data/White.png",64,64);
     Sprite black("data/Black.png",64,64);
     Sprite brown("data/Brown.png",64,64);
+    Sprite goat("data/Goat.png",64,128);
 	Sprite target("data/girl.png",64,64);
 	Mix_PlayMusic(song,-1);
+    printf("Adding Rainbow Bunny: ");
     game.addCharSprite(&rainbow);
+    printf("Adding White Bunny: ");
     game.addCharSprite(&white);
+    printf("Adding Black Bunny: ");
     game.addCharSprite(&black);
+    printf("Adding Brown Bunny: ");
     game.addCharSprite(&brown);
+    printf("Adding Goat on a Pole: ");
+    game.addCharSprite(&goat);
 	game.newGame(map);
 	printf("New game\n");
 	//main while loop
