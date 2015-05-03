@@ -12,6 +12,7 @@
 #include "hud.h"
 #include "map.h"
 #include "sprite.h"
+#include "game.h"
 
 #ifdef _PSP
 //Necessary to create eboot
@@ -28,8 +29,10 @@ const char *sfxpath[]={
 	"data/jump.wav",
 	"data/match.wav",
 };
-enum GameMode { MODE_TITLE, MODE_MENU, MODE_GAME, MODE_WINNER } gameMode;
+enum GameMode gameMode;
 int resetTimer;
+Game game;
+
 
 void playSound( SfxType id)
 {
@@ -38,116 +41,6 @@ void playSound( SfxType id)
 	}
 }
 
-bool hitTarget(Sprite *hero,Sprite *target,Map &map,Hud &hud)
-{
-	float deltax,deltay;
-	float dist;
-	deltax=target->x-hero->x;
-	deltay=target->y-hero->y;
-	dist=deltax*deltax+deltay*deltay;
-	if(dist<32*32) {
-		hero->score++;
-		hud.animateScore(map.viewx,map.viewy,hero);
-		return true;
-	}
-	return false;
-}
-
-void mapReset(Map &map,Sprite &hero,Sprite &baddie,Sprite &target)
-{
-	hero.reset(64,128);
-	baddie.reset(64,128);
-	int i,j;
-	i=(rand()%(map.getTilesAcross()-3))+2;
-	j=(rand()%(map.getTilesDown()-2))+1;
-	target.reset(32*i,32*j);
-	map.calculateGradient(&target);
-	resetTimer=3000;
-	Mix_PauseMusic();
-	map.updateView(&target);
-}
-
-void newGame(Map &map,Sprite &hero,Sprite &baddie,Sprite &target)
-{
-	hero.score=0;
-	baddie.score=0;
-	target.score=0;
-	mapReset(map,hero,baddie,target);
-	playSound(S_START);
-}
-
-void update(Map &map,Sprite &hero,Sprite &baddie,Sprite &target,Hud &hud)
-{
-	map.updatePhysics();
-	hero.updatePhysics(&map);
-	baddie.updatePhysics(&map);
-	target.updatePhysics(&map);
-	//baddie.x=200;
-	if(resetTimer>0) {
-		resetTimer-=16;
-		if(resetTimer<=0) {
-			resetTimer=0;
-			Mix_ResumeMusic();
-		}
-	} else {
-		map.updateView(&hero); //, &baddie);
-	}
-	hud.update(&hero, &baddie);
-	if( hitTarget(&hero,&target,map,hud) || hitTarget(&baddie,&target,map,hud)) {
-		mapReset(map,hero,baddie,target);
-		playSound(S_MATCH);
-		if(hud.leftScore>8 || hud.rightScore>8) gameMode=MODE_WINNER;
-	}
-}
-
-SDL_Surface *titleImage=0;
-SDL_Surface *menuImage=0;
-void draw(Map &map,Sprite &hero,Sprite &baddie,Sprite &target,Hud &hud)
-{
-#ifdef _PSP
-	oslStartDrawing();		//To be able to draw on the screen
-#else
-	static SDL_Surface *bgImage=0;
-	//if(!bgImage) bgImage=IMG_Load("data/title.png");
-	//if(bgImage) SDL_BlitSurface(bgImage,0,screen,0);
-	//else 
-    SDL_FillRect(screen,0,SDL_MapRGB(screen->format,240,240,128));
-#endif
-	
-	map.draw();		//Draw the images to the screen
-	hero.draw(map.viewx,map.viewy);
-	baddie.draw(map.viewx,map.viewy);
-	target.draw(map.viewx,map.viewy);
-	hud.draw();
-	if( gameMode==MODE_TITLE) {
-		if(!titleImage) titleImage=IMG_Load("data/title.png");
-		if(titleImage) SDL_BlitSurface( titleImage, NULL, screen, NULL);
-	} else {
-		if(titleImage) SDL_FreeSurface( titleImage);
-		titleImage=0;
-	}
-	if( gameMode==MODE_MENU) {
-		if(!menuImage) menuImage=IMG_Load("data/menu.png");
-		if(menuImage) SDL_BlitSurface( menuImage, NULL, screen, NULL);
-	} else {
-		if(menuImage) SDL_FreeSurface( menuImage);
-		menuImage=0;
-	}
-
-#ifdef _PSP
-	oslEndDrawing();		//Ends drawing mode
-
-	oslEndFrame();
-	oslSyncFrame();		//Synchronizes the screen
-#else
-	SDL_Flip(screen);
-	static long before;
-	long now=SDL_GetTicks();
-	long delay=before+32-now;
-	if(delay>0 && delay<60) SDL_Delay(delay);
-	before=now;
-#endif
-}
 
 #ifndef _PSP
 //#define main SDL_main
@@ -189,7 +82,7 @@ int main(int argc, char **argv)
 	Sprite baddie("data/White.png",64,64);
 	Sprite target("data/girl.png",64,64);
 	Mix_PlayMusic(song,-1);
-	newGame(map,hero,baddie,target);
+	game.newGame(map,hero,baddie,target);
 	printf("New game\n");
 	//main while loop
 #ifdef _PSP
@@ -226,7 +119,7 @@ int main(int argc, char **argv)
 				else if(gameMode==MODE_MENU) gameMode=MODE_GAME;
 				else if(gameMode==MODE_WINNER && resetTimer==0) {
                     gameMode=MODE_TITLE;
-                    newGame(map,hero,baddie,target);
+                    game.newGame(map,hero,baddie,target);
                 }
 				if(event.button.x<screen->w/4) {
                     hero.moveLeft(false);
@@ -275,14 +168,14 @@ int main(int argc, char **argv)
 				case 'a': baddie.moveLeft(false); break;
 				case 'd': baddie.moveRight(false); break;
 				case 'w': baddie.jump(false); break;
-				case SDLK_RETURN: newGame(map,hero,baddie,target); break;
+				case SDLK_RETURN: game.newGame(map,hero,baddie,target); break;
 				case SDLK_ESCAPE:
 					if(gameMode==MODE_MENU) {
 						printf("Game mode: mode_menu, done\n");
 						done=true;
 					} else {
 						printf("Game mode: %d\n", (int)gameMode);
-						newGame(map,hero,baddie,target);
+						game.newGame(map,hero,baddie,target);
 						gameMode=MODE_TITLE;
 					}
 					break;
@@ -296,18 +189,18 @@ int main(int argc, char **argv)
 			}
 		}
 #endif
-    	update(map,hero,baddie,target,hud);
+    	game.update(map,hero,baddie,target,hud);
         if(gameMode==MODE_GAME && resetTimer==0) {
     		baddie.ai(&map,&target);
         }
     
-    	update(map,hero,baddie,target,hud);
+    	game.update(map,hero,baddie,target,hud);
     	if(gameMode==MODE_GAME && resetTimer==0) {
     		baddie.ai(&map,&target);
         }
 
 		printf("Entry + 1 Beer\n");
-		draw(map,hero,baddie,target,hud);
+		game.draw(map,hero,baddie,target,hud);
 	}
 	
 	printf("Exiting...\n");

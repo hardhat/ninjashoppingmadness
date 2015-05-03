@@ -2,18 +2,23 @@
 
 class Map;
 class Sprite;
+class Hud;
 typedef std::deque<Sprite *> SpriteList;
 
 class Game
 {
 public:
     Game();
-    void draw();
-    void update(int elapsed);
+    bool hitTarget(Sprite *hero,Sprite *target,Map &map,Hud &hud);
+    void mapReset(Map &map,Sprite &hero,Sprite &baddie,Sprite &target);
+    void newGame(Map &map,Sprite &hero,Sprite &baddie,Sprite &target);
+
+    void draw(Map &map,Sprite &hero,Sprite &baddie,Sprite &target,Hud &hud);
+    void update(Map &map,Sprite &hero,Sprite &baddie,Sprite &target,Hud &hud);
     void handleDown(int key);
     void handleUp(int key);
 private:
-    Map *map;
-    SpriteList playerList;
-    SpriteList itemList;
+    Map *_map;
+    SpriteList _playerList;
+    SpriteList _itemList;
 };

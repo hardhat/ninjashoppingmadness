@@ -7,6 +7,7 @@ enum SfxType {
 	S_MATCH,
 	MAXSFX
 };
+extern enum GameMode { MODE_TITLE, MODE_MENU, MODE_GAME, MODE_WINNER } gameMode;
 
 void playSound( SfxType id);
 

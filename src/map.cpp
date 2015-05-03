@@ -10,14 +10,33 @@ struct Screen { int w,h; } scr={480,272};
 struct Screen *screen;
 #endif
 
-#define T_SKY 0
-#define T_LADDER 5
-#define T_GROUND 10
-#define T_GROUNDLADDER 15
-#define T_BRIDGE 16
-#define T_LADDERTOP 14
-#define T_ROCK 13
-#define T_CLIFF 11
+#define T_SKY 4
+#define T_LADDER 2
+#define T_GROUND 0
+#define T_GROUNDLADDER 6
+#define T_CEILING 3
+#define T_LADDERTOP 7
+#define T_ROCK 1
+#define T_CLIFF 8
+
+class TileCollide {
+public:
+	int id;
+	bool solid;
+	bool climbable;
+	bool obstacle;
+} tileCollide[]={
+	{ T_SKY, false, false, false },
+	{ T_LADDER, false, true, false },
+	{ T_LADDERTOP, true, true, false },
+	{ T_GROUNDLADDER, true, true, false },
+	{ T_GROUND, true, false, false },
+	{ T_ROCK, true, false, true },
+	{ T_CEILING, true, false, false },
+	{ T_CLIFF, true, false, false },
+	{ -1, false, false}
+};
+
 
 Map::Map()
 {
@@ -26,12 +45,12 @@ Map::Map()
 	backgroundImage=0;
 	levelImage=0;
 	collisionImage=0;
-	tilesAcross=64;
-	tilesDown=32;
+	tilesAcross=30;
+	tilesDown=15;
 	cell=new int[tilesAcross*tilesDown];
 	gradient=new int[tilesAcross*tilesDown];
-	cellw=32;
-	cellh=32;
+	cellw=64;
+	cellh=64;
 	viewTimer=1000;
 #ifdef _PSP
 	screen=&scr;
@@ -88,12 +107,12 @@ void Map::load(const char *level)
 			int pos=i+j*tilesAcross;
 			switch(line[i]) {
 			case ' ': cell[pos]=T_SKY; break;
-			case 'H': cell[pos]=T_LADDER; break;
+			case 'L': cell[pos]=T_LADDER; break;
 			case 'F': cell[pos]=T_LADDERTOP; break;
-			case 'L': cell[pos]=T_GROUNDLADDER; break;
+			case 'B': cell[pos]=T_GROUNDLADDER; break;
 			case '.': cell[pos]=T_GROUND; break;
 			case 'R': cell[pos]=T_ROCK; break;
-			case '_': cell[pos]=T_BRIDGE; break;
+			case '_': cell[pos]=T_CEILING; break;
 			case '#': cell[pos]=T_CLIFF; break;
 			}
 		}
@@ -101,24 +120,6 @@ void Map::load(const char *level)
 	fclose(file);
 	printf("Done..\n");
 }
-
-class TileCollide {
-public:
-	int id;
-	bool solid;
-	bool climbable;
-	bool obstacle;
-} tileCollide[]={
-	{ T_SKY, false, false, false },
-	{ T_LADDER, false, true, false },
-	{ T_LADDERTOP, true, true, false },
-	{ T_GROUNDLADDER, true, true, false },
-	{ T_GROUND, true, false, false },
-	{ T_ROCK, true, false, true },
-	{ T_BRIDGE, true, false, false },
-	{ T_CLIFF, true, false, false },
-	{ -1, false, false}
-};
 
 TileCollide *Map::getCollide( int tile)
 {
