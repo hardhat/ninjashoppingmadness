@@ -174,7 +174,7 @@ void Map::drawTile(int tile, int x, int y)
 	levelImage->y=dy;	// draw it where it goes
 	oslDrawImage(levelImage);
 #else
-	SDL_Rect src={left,top,cellw,cellh},dest={dx,dy,cellw,cellh};
+	SDL_Rect src={static_cast<Sint16>(left),static_cast<Sint16>(top),static_cast<Uint16>(cellw),static_cast<Uint16>(cellh)},dest={static_cast<Sint16>(dx),static_cast<Sint16>(dy),static_cast<Uint16>(cellw),static_cast<Uint16>(cellh)};
 	SDL_BlitSurface( levelImage, &src, screen, &dest);
 #endif
 }
@@ -185,7 +185,7 @@ void Map::draw()
 	oslDrawImage(backgroundImage);
 #else
 	if(backgroundImage) {
-		SDL_Rect src={0,0,screen->w,screen->h};
+		SDL_Rect src={0,0,static_cast<Uint16>(screen->w),static_cast<Uint16>(screen->h)};
 		int srangex=cellw*tilesAcross-screen->w;
 		int srangey=cellh*tilesDown-screen->h;
 		int drangex=backgroundImage->w-screen->w;

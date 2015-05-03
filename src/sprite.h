@@ -5,7 +5,7 @@
 #include <oslib/oslib.h>
 #else
 #include <SDL/SDL.h>
-#include <SDL/SDL_image.h>
+#include <SDL_image/SDL_image.h>
 #endif
 
 #include "falling.h"

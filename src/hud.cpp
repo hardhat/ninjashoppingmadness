@@ -1,5 +1,5 @@
 #include <SDL/SDL.h>
-#include <SDL/SDL_image.h>
+#include <SDL_image/SDL_image.h>
 #include "hud.h"
 #include "falling.h"
 
@@ -61,8 +61,8 @@ void Hud::animateScore(int viewx,int viewy,Falling *who)
 
 void Hud::drawDigit(int x,int y,int i)
 {
-	SDL_Rect src={i*32,0,32,32};
-	SDL_Rect dest={x,y,32,32};
+	SDL_Rect src={static_cast<Sint16>(i*32),0,32,32};
+	SDL_Rect dest={static_cast<Sint16>(x),static_cast<Sint16>(y),32,32};
 	SDL_BlitSurface(numbers,&src,screen,&dest);
 }
 
@@ -73,7 +73,7 @@ void Hud::drawArrow(int x,int y,int i)
 
 void Hud::drawIcon(int x,int y,SDL_Surface *image)
 {
-	SDL_Rect dest={x,y,0,0};
+	SDL_Rect dest={static_cast<Sint16>(x),static_cast<Sint16>(y),0,0};
 	SDL_BlitSurface(image,NULL,screen,&dest);
 }
 
