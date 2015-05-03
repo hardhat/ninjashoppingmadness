@@ -61,7 +61,7 @@ void Sprite::draw(int viewx,int viewy)
 	if(facing==FACING_LEFT) oslMirrorImageH(image);	// return to normal.
 #else
 	// doesn't do facing. :(
-	SDL_Rect src={left,top,cellw,cellh},dest={x-width/2-viewx,y-height/4-viewy,cellw,cellh};
+	SDL_Rect src={static_cast<Sint16>(left),static_cast<Sint16>(top),static_cast<Uint16>(cellw),static_cast<Uint16>(cellh)},dest={static_cast<Sint16>(x-width/2-viewx),static_cast<Sint16>(y-height/4-viewy),static_cast<Uint16>(cellw),static_cast<Uint16>(cellh)};
 	SDL_BlitSurface(image,&src,screen,&dest);
 #endif
 }
@@ -102,14 +102,27 @@ void Sprite::updatePhysics(Map *map)
 	frameTimer-=1;
 	if(frameTimer<0) {
 		frameTimer=3;
-		if(state==CS_RUNNING)	frame=(frame+1)%6;
-		if(state==CS_STANDING) frame=10;
-		if(state==CS_JUMPING) frame=6;
-		if(state==CS_FALLING) frame=20;	// was 8
-		if(state==CS_LANDING) frame=7;
-		if(state==CS_DEAD) frame=21;	// was 9
-		if(state==CS_PUNCHING) frame=11+((frame+1)%3);
-		if(state==CS_HIT) frame=15;
+        if(facing==FACING_LEFT){
+            if(state==CS_RUNNING)	frame=20+((frame+1)%14);
+            if(state==CS_STANDING) frame=30;
+            if(state==CS_JUMPING) frame=26;
+            if(state==CS_FALLING) frame=40;	// was 8
+            if(state==CS_LANDING) frame=27;
+            if(state==CS_DEAD) frame=41;	// was 9
+            if(state==CS_PUNCHING) frame=11+((frame+1)%3);
+            if(state==CS_HIT) frame=15;
+        }// flip
+        if(facing==FACING_RIGHT){
+            if(state==CS_RUNNING)	frame=(frame+1)%6;
+            if(state==CS_STANDING) frame=10;
+            if(state==CS_JUMPING) frame=6;
+            if(state==CS_FALLING) frame=20;	// was 8
+            if(state==CS_LANDING) frame=7;
+            if(state==CS_DEAD) frame=21;	// was 9
+            if(state==CS_PUNCHING) frame=11+((frame+1)%3);
+            if(state==CS_HIT) frame=15;
+
+        }// return to normal.
 	}
 
 	if(vx<-1.0f || vx>1.0f) state=CS_RUNNING;

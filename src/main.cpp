@@ -5,8 +5,8 @@
 #include <oslib/oslib.h>
 #else
 #include <SDL/SDL.h>
-#include <SDL/SDL_image.h>
-#include <SDL/SDL_mixer.h>
+#include <SDL_image/SDL_image.h>
+#include <SDL_mixer/SDL_mixer.h>
 #endif
 #include "main.h"
 #include "hud.h"
@@ -185,7 +185,7 @@ int main(int argc, char **argv)
 	Hud hud;
 	Map map;
 	map.load("data/level.txt");
-	Sprite hero("data/Brown.png",64,64);
+	Sprite hero("data/Rainbow.png",64,64);
 	Sprite baddie("data/White.png",64,64);
 	Sprite target("data/girl.png",64,64);
 	Mix_PlayMusic(song,-1);
