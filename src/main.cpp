@@ -83,11 +83,17 @@ int main(int argc, char **argv)
 	Hud hud;
 	Map map;
 	map.load("data/level.txt");
-	Sprite hero("data/Rainbow.png",64,64);
-	Sprite baddie("data/White.png",64,64);
+    Sprite rainbow("data/Rainbow.png",64,64);
+	Sprite white("data/White.png",64,64);
+    Sprite black("data/Black.png",64,64);
+    Sprite brown("data/Brown.png",64,64);
 	Sprite target("data/girl.png",64,64);
 	Mix_PlayMusic(song,-1);
-	game.newGame(map,hero,baddie,target);
+    game.addCharSprite(&rainbow);
+    game.addCharSprite(&white);
+    game.addCharSprite(&black);
+    game.addCharSprite(&brown);
+	game.newGame(map);
 	printf("New game\n");
 	//main while loop
 #ifdef _PSP
@@ -109,13 +115,13 @@ int main(int argc, char **argv)
 			case SDL_MOUSEBUTTONDOWN:
 				if(gameMode==MODE_WINNER) break;
 				if(event.button.x<screen->w/4) {
-                    hero.moveLeft(resetTimer==0);
+                    rainbow.moveLeft(resetTimer==0);
                     hud.leftActive=resetTimer==0;
 				} else if(event.button.x>screen->w*3/4) {
-                    hero.moveRight(resetTimer==0);
+                    rainbow.moveRight(resetTimer==0);
                     hud.rightActive=resetTimer==0;
 				} else if(event.button.y>screen->h*3/4) {
-                    hero.jump(resetTimer==0);
+                    rainbow.jump(resetTimer==0);
                     hud.jumpActive=resetTimer==0;
                 }
 				break;
@@ -124,24 +130,24 @@ int main(int argc, char **argv)
 				else if(gameMode==MODE_MENU) gameMode=MODE_GAME;
 				else if(gameMode==MODE_WINNER && resetTimer==0) {
                     gameMode=MODE_TITLE;
-                    game.newGame(map,hero,baddie,target);
+                    game.newGame(map);
                 }
 				if(event.button.x<screen->w/4) {
-                    hero.moveLeft(false);
+                    rainbow.moveLeft(false);
                     hud.leftActive=false;
 				} else if(event.button.x>screen->w*3/4) {
-                    hero.moveRight(false);
+                    rainbow.moveRight(false);
                     hud.rightActive=false;
 				} else if(event.button.y>screen->h*3/4) {
-                    hero.jump(false);
+                    rainbow.jump(false);
                     hud.jumpActive=false;
                 }
 				break;
 			case SDL_JOYBUTTONDOWN:
 				switch(event.jbutton.button) {
-				case 3: hero.moveLeft(resetTimer==0); break;
-				case 1: hero.moveRight(resetTimer==0); break;
-				case 2: hero.jump(resetTimer==0); break;
+				case 3: rainbow.moveLeft(resetTimer==0); break;
+				case 1: rainbow.moveRight(resetTimer==0); break;
+				case 2: rainbow.jump(resetTimer==0); break;
 				}
 				 break;
 			case SDL_JOYBUTTONUP:
@@ -149,38 +155,38 @@ int main(int argc, char **argv)
 				else if(gameMode==MODE_MENU) gameMode=MODE_GAME;
 				else if(gameMode==MODE_WINNER && resetTimer==0) gameMode=MODE_MENU;
 				switch(event.jbutton.button) {
-				case 3: hero.moveLeft(false); break;
-				case 1: hero.moveRight(false); break;
-				case 2: hero.jump(false); break;
+				case 3: rainbow.moveLeft(false); break;
+				case 1: rainbow.moveRight(false); break;
+				case 2: rainbow.jump(false); break;
 				}
 				break;
 
 			case SDL_KEYDOWN:
 				switch(event.key.keysym.sym) {
-				case SDLK_LEFT: hero.moveLeft(resetTimer==0); break;
-				case SDLK_RIGHT: hero.moveRight(resetTimer==0); break;
-				case SDLK_UP: hero.jump(resetTimer==0); break;
-				case 'a': baddie.moveLeft(resetTimer==0); break;
-				case 'd': baddie.moveRight(resetTimer==0); break;
-				case 'w': baddie.jump(resetTimer==0); break;
+				case SDLK_LEFT: rainbow.moveLeft(resetTimer==0); break;
+				case SDLK_RIGHT: rainbow.moveRight(resetTimer==0); break;
+				case SDLK_UP: rainbow.jump(resetTimer==0); break;
+				case 'a': black.moveLeft(resetTimer==0); break;
+				case 'd': black.moveRight(resetTimer==0); break;
+				case 'w': black.jump(resetTimer==0); break;
 				}
 				break;
 			case SDL_KEYUP:
 				switch(event.key.keysym.sym) {
-				case SDLK_LEFT: hero.moveLeft(false); break;
-				case SDLK_RIGHT: hero.moveRight(false); break;
-				case SDLK_UP: hero.jump(false); break;
-				case 'a': baddie.moveLeft(false); break;
-				case 'd': baddie.moveRight(false); break;
-				case 'w': baddie.jump(false); break;
-				case SDLK_RETURN: game.newGame(map,hero,baddie,target); break;
+				case SDLK_LEFT: rainbow.moveLeft(false); break;
+				case SDLK_RIGHT: rainbow.moveRight(false); break;
+				case SDLK_UP: rainbow.jump(false); break;
+				case 'a': black.moveLeft(false); break;
+				case 'd': black.moveRight(false); break;
+				case 'w': black.jump(false); break;
+				case SDLK_RETURN: game.newGame(map); break;
 				case SDLK_ESCAPE:
 					if(gameMode==MODE_MENU) {
 						printf("Game mode: mode_menu, done\n");
 						done=true;
 					} else {
 						printf("Game mode: %d\n", (int)gameMode);
-						game.newGame(map,hero,baddie,target);
+						game.newGame(map);
 						gameMode=MODE_TITLE;
 					}
 					break;
@@ -194,18 +200,18 @@ int main(int argc, char **argv)
 			}
 		}
 #endif
-    	game.update(map,hero,baddie,target,hud);
+    	game.update(map,rainbow,black,target,hud);
         if(gameMode==MODE_GAME && resetTimer==0) {
-    		baddie.ai(&map,&target);
+    		black.ai(&map,&target);
         }
     
-    	game.update(map,hero,baddie,target,hud);
+    	game.update(map,rainbow,black,target,hud);
     	if(gameMode==MODE_GAME && resetTimer==0) {
-    		baddie.ai(&map,&target);
+    		black.ai(&map,&target);
         }
 
 		printf("Entry + 1 Beer\n");
-		game.draw(map,hero,baddie,target,hud);
+		game.draw(map,rainbow,black,target,hud);
 	}
 	
 	printf("Exiting...\n");

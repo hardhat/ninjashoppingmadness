@@ -33,35 +33,68 @@ bool Game::hitTarget(Sprite *hero,Sprite *target,Map &map,Hud &hud)
 	return false;
 }
 
-void Game::mapReset(Map &map,Sprite &hero,Sprite &baddie,Sprite &target)
+void Game::mapReset(Map &map)
 {
-	hero.reset(64,128);
-	baddie.reset(64,128);
-	int i,j;
-	i=(rand()%(map.getTilesAcross()-3))+2;
-	j=(rand()%(map.getTilesDown()-2))+1;
-	target.reset(32*i,32*j);
-	map.calculateGradient(&target);
-	resetTimer=3000;
-	Mix_PauseMusic();
-	map.updateView(&target);
+//	hero.reset(64,128);
+//	baddie.reset(64,128);
+//	i=(rand()%(map.getTilesAcross()-3))+2;
+//	j=(rand()%(map.getTilesDown()-2))+1;
+//	target.reset(32*i,32*j);
+    int x,j;
+//    for (int i = 0; i < _playerList.size(); i++) {
+//        i=(rand()%(map.getTilesAcross()-3))+2;
+//        j=(rand()%(map.getTilesDown()-2))+1;
+//        _playerList[i]->reset(32*x, 32*j);
+//    }
+//    for (int i = 0; i < _itemList.size(); i++) {
+//        x=(rand()%(map.getTilesAcross()-3))+2;
+//        j=(rand()%(map.getTilesDown()-2))+1;
+//        _itemList[i]->reset(32*x, 32*j);
+//    }
+    for( SpriteList::iterator p=_playerList.begin(); p!=_playerList.end(); p++) {
+        x=(rand()%(map.getTilesAcross()-3))+2;
+        j=(rand()%(map.getTilesDown()-2))+1;
+        Sprite *player=*p;
+        player->reset(32*x, 32*j);
+    }
+    for( SpriteList::iterator p=_itemList.begin(); p!=_itemList.end(); p++) {
+        x=(rand()%(map.getTilesAcross()-3))+2;
+        j=(rand()%(map.getTilesDown()-2))+1;
+        Sprite *item=*p;
+        item->reset(32*x, 32*j);
+    }
+//	map.calculateGradient(&target);
+//	resetTimer=3000;
+//	Mix_PauseMusic();
+//	map.updateView(&target);
 }
 
-void Game::newGame(Map &map,Sprite &hero,Sprite &baddie,Sprite &target)
+void Game::newGame(Map &map)
 {
-	hero.score=0;
-	baddie.score=0;
-	target.score=0;
-	mapReset(map,hero,baddie,target);
+    //for (int i = 0; i < _playerList.size(); i++) {
+    for( SpriteList::iterator p=_playerList.begin(); p!=_playerList.end(); p++) {
+        Sprite *player=*p;
+        player->score = 0;
+    }
+    for( SpriteList::iterator p=_itemList.begin(); p!=_itemList.end(); p++) {
+        Sprite *item=*p;
+        item->score = 0;
+    }
+	mapReset(map);
 	playSound(S_START);
 }
 
 void Game::update(Map &map,Sprite &hero,Sprite &baddie,Sprite &target,Hud &hud)
 {
 	map.updatePhysics();
-	hero.updatePhysics(&map);
-	baddie.updatePhysics(&map);
-	target.updatePhysics(&map);
+    for( SpriteList::iterator p=_playerList.begin(); p!=_playerList.end(); p++) {
+        Sprite *player=*p;
+        player->updatePhysics(&map);
+    }
+    for( SpriteList::iterator p=_itemList.begin(); p!=_itemList.end(); p++) {
+        Sprite *item=*p;
+        item->updatePhysics(&map);
+    }
 	//baddie.x=200;
 	if(resetTimer>0) {
 		resetTimer-=16;
@@ -74,7 +107,7 @@ void Game::update(Map &map,Sprite &hero,Sprite &baddie,Sprite &target,Hud &hud)
 	}
 	hud.update(&hero, &baddie);
 	if( hitTarget(&hero,&target,map,hud) || hitTarget(&baddie,&target,map,hud)) {
-		mapReset(map,hero,baddie,target);
+		mapReset(map);
 		playSound(S_MATCH);
 		if(hud.leftScore>8 || hud.rightScore>8) gameMode=MODE_WINNER;
 	}
@@ -95,9 +128,14 @@ void Game::draw(Map &map,Sprite &hero,Sprite &baddie,Sprite &target,Hud &hud)
 #endif
 	
 	map.draw();		//Draw the images to the screen
-	hero.draw(map.viewx,map.viewy);
-	baddie.draw(map.viewx,map.viewy);
-	target.draw(map.viewx,map.viewy);
+    for( SpriteList::iterator p=_playerList.begin(); p!=_playerList.end(); p++) {
+        Sprite *player=*p;
+        player->draw(map.viewx,map.viewy);
+    }
+    for( SpriteList::iterator p=_itemList.begin(); p!=_itemList.end(); p++) {
+        Sprite *item=*p;
+        item->draw(map.viewx,map.viewy);
+    }
 	hud.draw();
 	if( gameMode==MODE_TITLE) {
 		if(!titleImage) titleImage=IMG_Load("data/title.png");
@@ -137,5 +175,14 @@ void Game::handleUp(int key)
 void Game::handleDown(int key)
 {
     
+}
+
+void Game::addCharSprite(Sprite* spriteToAdd){
+    printf("Adding character sprite\n");
+    _playerList.push_back(spriteToAdd);
+}
+
+void Game::addItemSprite(Sprite *spriteToAdd){
+    _itemList.push_back(spriteToAdd);
 }
 
