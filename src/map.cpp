@@ -32,7 +32,7 @@ public:
 	{ T_GROUNDLADDER, true, true, false },
 	{ T_GROUND, true, false, false },
 	{ T_ROCK, true, false, true },
-	{ T_CEILING, true, false, false },
+	{ T_CEILING, true, false, true },
 	{ T_CLIFF, true, false, false },
 	{ -1, false, false}
 };
@@ -167,7 +167,7 @@ void Map::drawTile(int tile, int x, int y)
 	// clipping outside of screen.
 	if(dx+cellw<0 || dx>screen->w || dy+cellh<0 || dy>screen->h) return;
 	// skip empty tiles
-	if(tile==0) return;
+	if(tile==T_SKY) return;
 #ifdef _PSP
 	oslSetImageTileSize(levelImage,left,top,cellw,cellh);	// set the sprite sheet up to show that sprite.
 	levelImage->x=dx;	// draw it where it goes
@@ -190,8 +190,8 @@ void Map::draw()
 		int srangey=cellh*tilesDown-screen->h;
 		int drangex=backgroundImage->w-screen->w;
 		int drangey=backgroundImage->h-screen->h;
-		src.x=viewx*drangex/srangex;
-		src.y=viewy*drangey/srangey;
+		src.x=srangex>0?viewx*drangex/srangex:0;
+		src.y=srangey>0?viewy*drangey/srangey:0;
 //		SDL_BlitSurface(backgroundImage,&src,screen,0);
 	}
 #endif
