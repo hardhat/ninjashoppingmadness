@@ -218,7 +218,7 @@ int main(int argc, char **argv)
 //    		black.ai(&map,&target);
 //        }
     
-//    	game.update(map,hud);
+    	game.update(map,hud);
 //    	if(gameMode==MODE_GAME && resetTimer==0) {
 //    		black.ai(&map,&target);
 //        }
